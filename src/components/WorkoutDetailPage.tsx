@@ -73,7 +73,7 @@ export function WorkoutDetailPage({ workout, onBack }: WorkoutDetailPageProps) {
             <div className="aspect-video bg-[#F5F2EE] rounded-lg overflow-hidden">
               <iframe
                 className="w-full h-full"
-                src={workout.videoUrl}
+                src={`${workout.videoUrl}?autoplay=1&mute=1`}
                 title={workout.title}
                 allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
                 allowFullScreen
@@ -82,28 +82,23 @@ export function WorkoutDetailPage({ workout, onBack }: WorkoutDetailPageProps) {
           </div>
         )}
 
-        {/* Description Section */}
-        <div className="bg-white rounded-2xl overflow-hidden border border-[#C9B8A4]/10 p-10 shadow-lg">
-          <h2 className="text-[#3D2E2B] mb-6 text-2xl">О тренировке</h2>
-          <div className="space-y-4 text-[#6D5D54] leading-relaxed font-light">
-            <p>
-              Эта тренировка направлена на улучшение осанки, укрепление мышц спины и развитие гибкости. 
-              Выполняйте упражнения плавно, следите за дыханием и своими ощущениями.
-            </p>
-            <p>
-              Во время занятия вы будете работать над:
-            </p>
-            <ul className="list-disc list-inside space-y-2 pl-4">
-              <li>Раскрытием грудного отдела</li>
-              <li>Укреплением мышц спины</li>
-              <li>Развитием гибкости позвоночника</li>
-              <li>Улучшением координации и баланса</li>
-            </ul>
-            <p className="pt-4 italic text-[#C9B8A4]">
-              Рекомендуется выполнять тренировку в комфортной одежде на коврике для йоги.
-            </p>
+        {/* Second Video Player - Rutube for "Против сутулости" */}
+        {workout.id === 18 && (
+          <div className="bg-white rounded-2xl overflow-hidden border border-[#C9B8A4]/10 p-8 shadow-lg">
+            <div className="aspect-video bg-[#F5F2EE] rounded-lg overflow-hidden">
+              <iframe 
+                width="720" 
+                height="405" 
+                src="https://rutube.ru/play/embed/4a25a54895245a3fd930042b7bf16887" 
+                allow="clipboard-write; autoplay" 
+                webkitAllowFullScreen 
+                mozallowfullscreen 
+                allowFullScreen
+                className="w-full h-full"
+              />
+            </div>
           </div>
-        </div>
+        )}
       </div>
     </div>
   );

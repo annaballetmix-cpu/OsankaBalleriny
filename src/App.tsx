@@ -1,6 +1,7 @@
 import { CourseSection } from './components/CourseSection';
 import { WorkoutsPage } from './components/WorkoutsPage';
 import { WorkoutDetailPage } from './components/WorkoutDetailPage';
+import { ProgressPhotosPage } from './components/ProgressPhotosPage';
 import { ActivityCalendar } from './components/ActivityCalendar';
 import { FavoritesSection } from './components/FavoritesSection';
 import { FavoritesPage } from './components/FavoritesPage';
@@ -14,6 +15,7 @@ import img3 from "figma:asset/9000cedfcc56344d2123d652d1763eae4372296f.png";
 export default function App() {
   const [selectedSection, setSelectedSection] = useState<number | null>(null);
   const [selectedWorkout, setSelectedWorkout] = useState<{ id: number; title: string; duration: string; videoUrl?: string; sectionTitle: string } | null>(null);
+  const [showProgressPhotos, setShowProgressPhotos] = useState(false);
 
   const sections = [
     {
@@ -31,7 +33,7 @@ export default function App() {
           title: 'Неделя 1',
           workouts: [
             { id: 1, title: 'Раскрытие грудного отдела', duration: '25 мин', completed: false },
-            { id: 2, title: 'Расслабление поясницы через ТБС', duration: '30 мин', completed: false },
+            { id: 2, title: 'Расслабление поясницы через ТБС', duration: '20 мин', completed: false },
             { id: 3, title: 'Укрепляем спину', duration: '28 мин', completed: false },
           ]
         },
@@ -74,12 +76,12 @@ export default function App() {
       duration: '5-15 мин',
       color: 'from-yellow-50 to-amber-50',
       workouts: [
-        { id: 13, title: 'Утренняя растяжка', duration: '10 мин', completed: false },
-        { id: 14, title: 'Пробуждение тела', duration: '12 мин', completed: false },
-        { id: 15, title: 'Энергия на весь день', duration: '15 мин', completed: false },
         { id: 16, title: 'Расслабление поясницы', duration: '5 мин', completed: false },
         { id: 17, title: 'Суставной разогрев', duration: '5 мин', completed: false },
         { id: 18, title: 'Против сутулости', duration: '5 мин', completed: false },
+        { id: 13, title: 'Утренняя растяжка', duration: '10 мин', completed: false },
+        { id: 14, title: 'Пробуждение тела', duration: '12 мин', completed: false },
+        { id: 15, title: 'Энергия на весь день', duration: '15 мин', completed: false },
       ]
     },
     {
@@ -100,6 +102,16 @@ export default function App() {
   ];
 
   const currentSection = sections.find(s => s.id === selectedSection);
+
+  // Handle Progress Photos Page
+  if (showProgressPhotos) {
+    return (
+      <ProgressPhotosPage 
+        sectionTitle={currentSection?.title || 'Основные тренировки'}
+        onBack={() => setShowProgressPhotos(false)}
+      />
+    );
+  }
 
   if (selectedWorkout) {
     return (
@@ -126,7 +138,14 @@ export default function App() {
       <WorkoutsPage 
         section={currentSection} 
         onBack={() => setSelectedSection(null)}
-        onSelectWorkout={(workout) => setSelectedWorkout(workout)}
+        onSelectWorkout={(workout) => {
+          // Check if it's the progress photos banner
+          if (workout.id === -1) {
+            setShowProgressPhotos(true);
+          } else {
+            setSelectedWorkout(workout);
+          }
+        }}
       />
     );
   }
@@ -158,7 +177,7 @@ export default function App() {
           </div>
           <div className="w-20 h-[2px] mx-auto mb-6 rounded-full" style={{ background: 'var(--gradient-terracotta)' }} />
           <p className="text-[#6D5D54] max-w-2xl mx-auto italic text-lg leading-relaxed font-light">
-            грация, уверенность и красота в каждом движении
+            ��ация, уверенность и красота в каждом движении
           </p>
         </header>
 
